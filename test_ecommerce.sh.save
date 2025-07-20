@@ -1,0 +1,4 @@
+chmod +x test_ecommerce.sh
+
+./test_ecommerce.sh
+
