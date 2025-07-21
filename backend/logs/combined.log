@@ -620,3 +620,19 @@
 {"level":"info","message":"📚 API Documentation: http://localhost:5000/api","timestamp":"2025-07-21T06:59:58.558Z"}
 {"level":"info","message":"🏥 Health Check: http://localhost:5000/health","timestamp":"2025-07-21T06:59:58.558Z"}
 {"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2025-07-21T07:18:26.732Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-21T15:10:08.930Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-21T15:10:08.938Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-21T15:10:08.939Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-21T15:10:08.943Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-21T15:10:08.944Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-21T15:10:08.948Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-21T15:10:08.950Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-21T15:10:08.950Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-21T15:10:08.952Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-21T15:10:08.968Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-21T15:10:08.970Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-21T15:10:09.012Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-21T15:10:09.014Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-21T15:10:09.014Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-21T15:10:09.014Z"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2025-07-21T15:13:08.216Z"}
