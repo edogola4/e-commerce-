@@ -317,9 +317,15 @@ const validateAddToCart = [
   handleValidationErrors
 ];
 
-// Search and filter validation
+// Search and filter validation - FIXED TO INCLUDE ALL SORT OPTIONS
 const validateSearch = [
   query('q')
+    .optional()
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .withMessage('Search query must be between 1 and 100 characters'),
+    
+  query('search')
     .optional()
     .trim()
     .isLength({ min: 1, max: 100 })
@@ -329,6 +335,12 @@ const validateSearch = [
     .optional()
     .isMongoId()
     .withMessage('Category must be a valid ID'),
+    
+  query('brand')
+    .optional()
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .withMessage('Brand must be between 1 and 100 characters'),
     
   query('minPrice')
     .optional()
@@ -355,10 +367,42 @@ const validateSearch = [
     .isInt({ min: 1, max: 50 })
     .withMessage('Limit must be between 1 and 50'),
     
+  // FIXED: Extended sort options to include all valid sorting fields
   query('sort')
     .optional()
-    .isIn(['price', '-price', 'rating', '-rating', 'createdAt', '-createdAt', 'name', '-name'])
-    .withMessage('Invalid sort option'),
+    .isIn([
+      'price', '-price',
+      'name', '-name', 
+      'createdAt', '-createdAt',
+      'ratings.average', '-ratings.average',
+      'rating', '-rating',
+      'discount', '-discount',
+      'stock', '-stock',
+      'analytics.purchases', '-analytics.purchases',
+      'analytics.views', '-analytics.views'
+    ])
+    .withMessage('Invalid sort option. Valid options: price, -price, name, -name, createdAt, -createdAt, rating, -rating, discount, -discount, stock, -stock'),
+    
+  // Additional query parameters for product filtering
+  query('featured')
+    .optional()
+    .isIn(['true', 'false'])
+    .withMessage('Featured must be true or false'),
+    
+  query('onSale')
+    .optional()
+    .isIn(['true', 'false'])
+    .withMessage('OnSale must be true or false'),
+    
+  query('isActive')
+    .optional()
+    .isIn(['true', 'false'])
+    .withMessage('IsActive must be true or false'),
+    
+  query('inStock')
+    .optional()
+    .isIn(['true', 'false'])
+    .withMessage('InStock must be true or false'),
     
   handleValidationErrors
 ];
@@ -402,6 +446,43 @@ const validateAddress = [
   handleValidationErrors
 ];
 
+// Payment validation
+const validatePayment = [
+  body('amount')
+    .isFloat({ min: 1 })
+    .withMessage('Amount must be greater than 0'),
+    
+  body('currency')
+    .optional()
+    .isIn(['KES', 'USD'])
+    .withMessage('Currency must be KES or USD'),
+    
+  body('paymentMethod')
+    .isIn(['mpesa', 'card', 'bank_transfer'])
+    .withMessage('Invalid payment method'),
+    
+  body('phoneNumber')
+    .if(body('paymentMethod').equals('mpesa'))
+    .matches(/^(\+254|0)[17]\d{8}$/)
+    .withMessage('Valid M-Pesa phone number is required'),
+    
+  handleValidationErrors
+];
+
+// Inventory validation
+const validateInventory = [
+  body('quantity')
+    .isInt({ min: 0 })
+    .withMessage('Quantity must be a non-negative integer'),
+    
+  body('operation')
+    .optional()
+    .isIn(['set', 'add', 'subtract'])
+    .withMessage('Operation must be set, add, or subtract'),
+    
+  handleValidationErrors
+];
+
 module.exports = {
   handleValidationErrors,
   validateRegister,
@@ -416,5 +497,7 @@ module.exports = {
   validateAddToCart,
   validateSearch,
   validateObjectId,
-  validateAddress
+  validateAddress,
+  validatePayment,
+  validateInventory
 };

@@ -636,3 +636,218 @@
 {"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-21T15:10:09.014Z"}
 {"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-21T15:10:09.014Z"}
 {"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2025-07-21T15:13:08.216Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-22T06:17:40.239Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-22T06:17:40.245Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-22T06:17:40.246Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-22T06:17:40.248Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-22T06:17:40.249Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-22T06:17:40.251Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-22T06:17:40.252Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-22T06:17:40.252Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-22T06:17:40.253Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-22T06:17:40.265Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-22T06:17:40.266Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-22T06:17:40.303Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-22T06:17:40.304Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-22T06:17:40.305Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-22T06:17:40.305Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T06:29:14.159Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T06:29:14.168Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T06:29:14.196Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T06:29:14.200Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T06:29:14.217Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T06:29:14.218Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T06:29:14.222Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T12:19:45.945Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T12:19:45.952Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T12:19:46.008Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T12:19:46.009Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T12:19:46.015Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T12:19:46.020Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T12:19:46.022Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-22T12:19:46.026Z"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2025-07-22T12:28:40.777Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-22T12:28:48.398Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-22T12:28:48.404Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-22T12:28:48.405Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-22T12:28:48.407Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-22T12:28:48.408Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-22T12:28:48.411Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-22T12:28:48.414Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-22T12:28:48.414Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-22T12:28:48.415Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-22T12:28:48.428Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-22T12:28:48.429Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-22T12:28:48.465Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-22T12:28:48.466Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-22T12:28:48.466Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-22T12:28:48.466Z"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2025-07-22T12:29:17.438Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-22T12:29:24.137Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-22T12:29:24.143Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-22T12:29:24.144Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-22T12:29:24.148Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-22T12:29:24.149Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-22T12:29:24.153Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-22T12:29:24.154Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-22T12:29:24.155Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-22T12:29:24.157Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-22T12:29:24.180Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-22T12:29:24.182Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-22T12:29:24.234Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-22T12:29:24.235Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-22T12:29:24.235Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-22T12:29:24.235Z"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2025-07-22T12:34:30.530Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-22T12:34:51.727Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-22T12:34:51.734Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-22T12:34:51.735Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-22T12:34:51.738Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-22T12:34:51.738Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-22T12:34:51.741Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-22T12:34:51.741Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-22T12:34:51.742Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-22T12:34:51.743Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-22T12:34:51.755Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-22T12:34:51.756Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-22T12:34:51.804Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-22T12:34:51.806Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-22T12:34:51.806Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-22T12:34:51.806Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-22T12:56:34.332Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-22T12:56:34.339Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-22T12:56:34.340Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-22T12:56:34.342Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-22T12:56:34.343Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-22T12:56:34.345Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-22T12:56:34.346Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-22T12:56:34.346Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-22T12:56:34.347Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-22T12:56:34.359Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-22T12:56:34.361Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-22T12:56:34.406Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-22T12:56:34.407Z"}
+{"level":"info","message":"🏠 Root endpoint: http://localhost:5001/","timestamp":"2025-07-22T12:56:34.407Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-22T12:56:34.407Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-22T12:56:34.407Z"}
+{"level":"info","message":"📊 Server Status: http://localhost:5001/api/status","timestamp":"2025-07-22T12:56:34.407Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-22T12:57:30.731Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-22T12:57:30.737Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-22T12:57:30.737Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-22T12:57:30.740Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-22T12:57:30.741Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-22T12:57:30.743Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-22T12:57:30.744Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-22T12:57:30.744Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-22T12:57:30.745Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-22T12:57:30.757Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-22T12:57:30.759Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-22T12:57:30.803Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-22T12:57:30.804Z"}
+{"level":"info","message":"🏠 Root endpoint: http://localhost:5001/","timestamp":"2025-07-22T12:57:30.804Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-22T12:57:30.804Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-22T12:57:30.804Z"}
+{"level":"info","message":"📊 Server Status: http://localhost:5001/api/status","timestamp":"2025-07-22T12:57:30.804Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-22T13:15:01.448Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-22T13:15:01.484Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-22T13:15:01.485Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-22T13:15:01.488Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-22T13:15:01.490Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-22T13:15:01.495Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-22T13:15:01.495Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-22T13:15:01.496Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-22T13:15:01.497Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-22T13:15:01.517Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-22T13:15:01.518Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-22T13:15:01.574Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-22T13:15:01.575Z"}
+{"level":"info","message":"🏠 Root endpoint: http://localhost:5001/","timestamp":"2025-07-22T13:15:01.575Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-22T13:15:01.575Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-22T13:15:01.576Z"}
+{"level":"info","message":"📊 Server Status: http://localhost:5001/api/status","timestamp":"2025-07-22T13:15:01.576Z"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2025-07-23T05:58:53.298Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-23T05:59:01.422Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-23T05:59:01.430Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-23T05:59:01.431Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-23T05:59:01.434Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-23T05:59:01.435Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-23T05:59:01.438Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-23T05:59:01.439Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-23T05:59:01.439Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-23T05:59:01.440Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-23T05:59:01.453Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-23T05:59:01.454Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-23T05:59:01.505Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-23T05:59:01.507Z"}
+{"level":"info","message":"🏠 Root endpoint: http://localhost:5001/","timestamp":"2025-07-23T05:59:01.507Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-23T05:59:01.507Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-23T05:59:01.507Z"}
+{"level":"info","message":"📊 Server Status: http://localhost:5001/api/status","timestamp":"2025-07-23T05:59:01.507Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-23T05:59:56.780Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-23T05:59:56.787Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-23T05:59:56.788Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-23T05:59:56.791Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-23T05:59:56.792Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-23T05:59:56.795Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-23T05:59:56.796Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-23T05:59:56.796Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-23T05:59:56.797Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-23T05:59:56.809Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-23T05:59:56.811Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-23T05:59:56.856Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-23T05:59:56.858Z"}
+{"level":"info","message":"🏠 Root endpoint: http://localhost:5001/","timestamp":"2025-07-23T05:59:56.858Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-23T05:59:56.858Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-23T05:59:56.858Z"}
+{"level":"info","message":"📊 Server Status: http://localhost:5001/api/status","timestamp":"2025-07-23T05:59:56.858Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-23T06:04:44.653Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-23T06:04:44.659Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-23T06:04:44.659Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-23T06:04:44.662Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-23T06:04:44.663Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-23T06:04:44.665Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-23T06:04:44.665Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-23T06:04:44.666Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-23T06:04:44.666Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-23T06:04:44.678Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-23T06:04:44.680Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-23T06:04:44.721Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-23T06:04:44.722Z"}
+{"level":"info","message":"🏠 Root endpoint: http://localhost:5001/","timestamp":"2025-07-23T06:04:44.722Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-23T06:04:44.722Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-23T06:04:44.722Z"}
+{"level":"info","message":"📊 Server Status: http://localhost:5001/api/status","timestamp":"2025-07-23T06:04:44.722Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-23T06:18:16.586Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-23T06:18:16.594Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-23T06:18:16.595Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-23T06:18:16.598Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-23T06:18:16.598Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-23T06:18:16.601Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-23T06:18:16.601Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-23T06:18:16.601Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-23T06:18:16.602Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-23T06:18:16.617Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-23T06:18:16.618Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-23T06:18:16.670Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-23T06:18:16.671Z"}
+{"level":"info","message":"🏠 Root endpoint: http://localhost:5001/","timestamp":"2025-07-23T06:18:16.671Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-23T06:18:16.671Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-23T06:18:16.671Z"}
+{"level":"info","message":"📊 Server Status: http://localhost:5001/api/status","timestamp":"2025-07-23T06:18:16.671Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-23T06:22:24.151Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-23T06:22:24.158Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-23T06:22:24.159Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-23T06:22:24.162Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-23T06:22:24.163Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-23T06:22:24.165Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-23T06:22:24.165Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-23T06:22:24.166Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-23T06:22:24.166Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-23T06:22:24.181Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-23T06:22:24.182Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-23T06:22:24.233Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-23T06:22:24.235Z"}
+{"level":"info","message":"🏠 Root endpoint: http://localhost:5001/","timestamp":"2025-07-23T06:22:24.235Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-23T06:22:24.235Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-23T06:22:24.235Z"}
+{"level":"info","message":"📊 Server Status: http://localhost:5001/api/status","timestamp":"2025-07-23T06:22:24.235Z"}

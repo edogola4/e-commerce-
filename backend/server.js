@@ -175,6 +175,26 @@ app.get('/health', (req, res) => {
   res.status(200).json(healthcheck);
 });
 
+// Memory status endpoint for monitoring
+app.get('/api/status', (req, res) => {
+  const memUsage = process.memoryUsage();
+  res.json({
+    success: true,
+    server: {
+      uptime: process.uptime(),
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV
+    },
+    memory: {
+      rss: `${Math.round(memUsage.rss / 1024 / 1024)} MB`,
+      heapTotal: `${Math.round(memUsage.heapTotal / 1024 / 1024)} MB`,
+      heapUsed: `${Math.round(memUsage.heapUsed / 1024 / 1024)} MB`,
+      external: `${Math.round(memUsage.external / 1024 / 1024)} MB`,
+      heapUsedPercent: `${Math.round((memUsage.heapUsed / memUsage.heapTotal) * 100)}%`
+    }
+  });
+});
+
 // API Routes with error handling
 const routes = [
     { path: '/api/auth', module: './src/routes/auth', name: 'Auth' },
@@ -189,7 +209,6 @@ const routes = [
     { path: '/api/email', module: './src/routes/email', name: 'Email' },
     { path: '/api/tracking', module: './src/routes/tracking', name: 'Tracking' },
     { path: '/api/payments', module: './src/routes/payments', name: 'Payments' }
-
   ];
   
   // Load routes (this should only appear ONCE in your server.js)
@@ -218,9 +237,47 @@ app.get('/api', (req, res) => {
       orders: '/api/orders',
       reviews: '/api/reviews',
       recommendations: '/api/recommendations',
-      checkout: '/api/checkout'
+      checkout: '/api/checkout',
+      inventory: '/api/inventory',
+      email: '/api/email',
+      tracking: '/api/tracking',
+      payments: '/api/payments'
+    },
+    utilities: {
+      health: '/health',
+      status: '/api/status'
     },
     documentation: process.env.API_DOCS_URL || 'Coming soon'
+  });
+});
+
+// Root endpoint - FIXES THE 404 ERROR
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Welcome to My E-Commerce API Server',
+    version: '1.0.0',
+    status: 'Server is running successfully',
+    server: {
+      environment: process.env.NODE_ENV,
+      uptime: `${Math.floor(process.uptime())} seconds`,
+      timestamp: new Date().toISOString()
+    },
+    quickLinks: {
+      api_documentation: '/api',
+      health_check: '/health',
+      server_status: '/api/status'
+    },
+    endpoints: {
+      auth: '/api/auth',
+      products: '/api/products',
+      categories: '/api/categories',
+      users: '/api/users',
+      orders: '/api/orders',
+      reviews: '/api/reviews',
+      recommendations: '/api/recommendations',
+      checkout: '/api/checkout'
+    }
   });
 });
 
@@ -234,9 +291,24 @@ const PORT = process.env.PORT || 5001;
 
 const server = app.listen(PORT, () => {
   logger.info(`🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  logger.info(`🏠 Root endpoint: http://localhost:${PORT}/`);
   logger.info(`📚 API Documentation: http://localhost:${PORT}/api`);
   logger.info(`🏥 Health Check: http://localhost:${PORT}/health`);
+  logger.info(`📊 Server Status: http://localhost:${PORT}/api/status`);
 });
+
+// Memory monitoring - Log memory usage every 5 minutes in development
+if (process.env.NODE_ENV !== 'production') {
+  setInterval(() => {
+    const memUsage = process.memoryUsage();
+    const heapUsedMB = Math.round(memUsage.heapUsed / 1024 / 1024);
+    const heapTotalMB = Math.round(memUsage.heapTotal / 1024 / 1024);
+    
+    if (heapUsedMB > 1000) { // Log warning if heap usage > 1GB
+      logger.warn(`High memory usage detected: ${heapUsedMB}MB / ${heapTotalMB}MB`);
+    }
+  }, 5 * 60 * 1000); // Every 5 minutes
+}
 
 // Graceful shutdown handling
 const gracefulShutdown = (signal) => {
