@@ -6,6 +6,13 @@ module.exports = {
       './components/**/*.{ts,tsx}',
       './app/**/*.{ts,tsx}',
       './src/**/*.{ts,tsx}',
+      './src/components/**/*.{ts,tsx}',
+      './src/components/ui/**/*.{ts,tsx}',
+      './src/hooks/**/*.{ts,tsx}',
+      './src/lib/**/*.{ts,tsx}',
+      './src/store/**/*.{ts,tsx}',
+      './src/types/**/*.{ts,tsx}',
+      './src/app/**/*.{ts,js,jsx,tsx}',
     ],
     prefix: "",
     theme: {

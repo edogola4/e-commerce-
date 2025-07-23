@@ -11,6 +11,7 @@ import { CartModal } from '@/components/cart/cart-modal';
 import { SearchModal } from '@/components/common/search-modal';
 import { WishlistModal } from '@/components/wishlist/wishlist-modal';
 import '../app/globals.css';
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
