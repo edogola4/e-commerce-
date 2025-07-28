@@ -1,3 +1,4 @@
+// frontend/src/app/(dashboard)/profile/page.tsx
 'use client';
 
 import { useState } from 'react';
@@ -12,6 +13,55 @@ import { SecuritySettings } from '@/components/dashboard/security-settings';
 import { NotificationSettings } from '@/components/dashboard/notification-settings';
 import { useAuth, useProtectedRoute } from '@/hooks';
 
+// Helper functions to safely handle user data
+const getUserDisplayName = (user: any): string => {
+  if (!user) return 'User';
+  
+  // If user has firstName and lastName (from backend)
+  if (user.firstName || user.lastName) {
+    return `${user.firstName || ''} ${user.lastName || ''}`.trim();
+  }
+  
+  // Fallback to name field if it exists
+  if (user.name) {
+    return user.name;
+  }
+  
+  // Final fallback
+  return user.email ? user.email.split('@')[0] : 'User';
+};
+
+const getUserInitials = (user: any): string => {
+  if (!user) return 'U';
+  
+  // If user has firstName and lastName
+  if (user.firstName || user.lastName) {
+    const first = (user.firstName || '').charAt(0).toUpperCase();
+    const last = (user.lastName || '').charAt(0).toUpperCase();
+    return (first + last) || first || last || 'U';
+  }
+  
+  // Fallback to name field
+  if (user.name) {
+    const nameParts = user.name.split(' ');
+    if (nameParts.length >= 2) {
+      return nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase();
+    }
+    return user.name.charAt(0).toUpperCase();
+  }
+  
+  // Final fallback
+  return user.email ? user.email.charAt(0).toUpperCase() : 'U';
+};
+
+const getUserEmail = (user: any): string => {
+  return user?.email || 'No email';
+};
+
+const isEmailVerified = (user: any): boolean => {
+  return user?.isEmailVerified || false;
+};
+
 export default function ProfilePage() {
   const { isAuthenticated, isLoading } = useProtectedRoute();
   const { user } = useAuth();
@@ -23,12 +73,12 @@ export default function ProfilePage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="space-y-4">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="skeleton h-12 w-full" />
+              <div key={i} className="animate-pulse bg-muted rounded-lg h-12 w-full" />
             ))}
           </div>
           <div className="lg:col-span-3 space-y-4">
-            <div className="skeleton h-8 w-1/4" />
-            <div className="skeleton h-64 w-full" />
+            <div className="animate-pulse bg-muted rounded-lg h-8 w-1/4" />
+            <div className="animate-pulse bg-muted rounded-lg h-64 w-full" />
           </div>
         </div>
       </div>
@@ -68,18 +118,18 @@ export default function ProfilePage() {
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
                     <span className="text-primary-foreground text-xl font-bold">
-                      {user.name.charAt(0).toUpperCase()}
+                      {getUserInitials(user)}
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold truncate">{user.name}</h3>
+                    <h3 className="font-semibold truncate">{getUserDisplayName(user)}</h3>
                     <p className="text-sm text-muted-foreground truncate">
-                      {user.email}
+                      {getUserEmail(user)}
                     </p>
                     <div className="flex items-center space-x-1 mt-1">
-                      <div className={`w-2 h-2 rounded-full ${user.isEmailVerified ? 'bg-green-500' : 'bg-orange-500'}`} />
+                      <div className={`w-2 h-2 rounded-full ${isEmailVerified(user) ? 'bg-green-500' : 'bg-orange-500'}`} />
                       <span className="text-xs text-muted-foreground">
-                        {user.isEmailVerified ? 'Verified' : 'Unverified'}
+                        {isEmailVerified(user) ? 'Verified' : 'Unverified'}
                       </span>
                     </div>
                   </div>
@@ -106,6 +156,32 @@ export default function ProfilePage() {
                     </button>
                   ))}
                 </nav>
+              </CardContent>
+            </Card>
+
+            {/* Quick Stats Card */}
+            <Card>
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary">
+                      {user?.orders?.length || 0}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Total Orders</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary">
+                      {user?.wishlist?.length || 0}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Wishlist Items</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary">
+                      {user?.addresses?.length || 0}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Saved Addresses</div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>

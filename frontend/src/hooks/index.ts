@@ -1,3 +1,4 @@
+// frontend/src/hooks/index.ts
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { api, handleApiError } from '@/lib/api';

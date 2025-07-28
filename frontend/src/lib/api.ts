@@ -1,4 +1,4 @@
-//src/lib/api.ts
+// frontend/src/lib/api.ts
 
 import axios, { 
   AxiosInstance, 
@@ -26,10 +26,10 @@ export const API_ENDPOINTS: ApiEndpoints = {
   VERIFY_EMAIL: '/auth/verify-email',
   
   // User endpoints
-  PROFILE: '/user/profile',
-  UPDATE_PROFILE: '/user/profile',
-  CHANGE_PASSWORD: '/user/change-password',
-  ADDRESSES: '/user/addresses',
+  PROFILE: '/auth/me',
+  UPDATE_PROFILE: '/auth/profile',
+  CHANGE_PASSWORD: '/auth/password',
+  ADDRESSES: '/auth/addresses',
   
   // Product endpoints
   PRODUCTS: '/products',
@@ -82,10 +82,12 @@ export const tokenManager = {
 
   setToken: (token: string): void => {
     if (typeof window === 'undefined') return;
+    console.log('💾 Storing token:', token ? 'Token received' : 'No token to store');
     Cookies.set(TOKEN_KEY, token, {
       expires: 7, // 7 days
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax', // More permissive in development
+      path: '/' // Ensure cookie is available site-wide
     });
   },
 
@@ -114,8 +116,10 @@ export const tokenManager = {
 apiClient.interceptors.request.use(
   (config) => {
     const token = tokenManager.getToken();
+    console.log('🔑 Token being sent:', token ? 'Token exists' : 'No token found');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log('📤 Authorization header set:', `Bearer ${token.substring(0, 20)}...`);
     }
     return config;
   },
@@ -217,6 +221,19 @@ const cleanParams = (params: any): any => {
   return cleaned;
 };
 
+// Helper function to split full name into firstName and lastName
+const splitName = (fullName: string): { firstName: string; lastName: string } => {
+  if (!fullName || typeof fullName !== 'string') {
+    return { firstName: '', lastName: '' };
+  }
+
+  const nameParts = fullName.trim().split(/\s+/);
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+
+  return { firstName, lastName };
+};
+
 // API methods
 export const api = {
   // Generic methods
@@ -245,8 +262,20 @@ export const api = {
     login: (credentials: { email: string; password: string }) =>
       api.post(API_ENDPOINTS.LOGIN, credentials),
 
-    register: (userData: { name: string; email: string; password: string; phone?: string }) =>
-      api.post(API_ENDPOINTS.REGISTER, userData),
+    register: (userData: { name: string; email: string; password: string; phone?: string }) => {
+      // Split the full name into firstName and lastName to match backend expectations
+      const { firstName, lastName } = splitName(userData.name);
+      
+      const registrationData = {
+        firstName,
+        lastName,
+        email: userData.email,
+        password: userData.password,
+        ...(userData.phone && { phone: userData.phone }), // Only include phone if provided
+      };
+
+      return api.post(API_ENDPOINTS.REGISTER, registrationData);
+    },
 
     logout: () =>
       api.post(API_ENDPOINTS.LOGOUT),

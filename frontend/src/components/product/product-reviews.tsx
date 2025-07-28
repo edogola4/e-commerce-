@@ -165,7 +165,7 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <span className="text-3xl font-bold">{averageRating}</span>
-              {renderStars(Math.round(parseFloat(averageRating)), 'lg')}
+              {renderStars(Math.round(parseFloat(averageRating.toString())), 'lg')}
               <span className="text-sm text-muted-foreground">
                 ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
               </span>

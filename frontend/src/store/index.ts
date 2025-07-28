@@ -1,3 +1,4 @@
+// frontend/src/store/index.ts
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
@@ -48,7 +49,18 @@ export const useAuthStore = create<AuthState & AuthActions>()(
 
       try {
         const response = await api.auth.login(credentials);
-        const { user, token } = response.data;
+        console.log('🔍 Login response:', response); // Debug log
+        
+        // Extract token and user from response
+        const token = response.token || response.data?.token;
+        const user = response.data?.user || response.user;
+        
+        console.log('🔑 Extracted token:', token ? 'Token exists' : 'No token found');
+        console.log('👤 Extracted user:', user);
+
+        if (!token) {
+          throw new Error('No token received from server');
+        }
 
         tokenManager.setToken(token);
 
@@ -78,7 +90,18 @@ export const useAuthStore = create<AuthState & AuthActions>()(
 
       try {
         const response = await api.auth.register(data);
-        const { user, token } = response.data;
+        console.log('🔍 Register response:', response); // Debug log
+        
+        // Extract token and user from response
+        const token = response.token || response.data?.token;
+        const user = response.data?.user || response.user;
+        
+        console.log('🔑 Extracted token:', token ? 'Token exists' : 'No token found');
+        console.log('👤 Extracted user:', user);
+
+        if (!token) {
+          throw new Error('No token received from server');
+        }
 
         tokenManager.setToken(token);
 

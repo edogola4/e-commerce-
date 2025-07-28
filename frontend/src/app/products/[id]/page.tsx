@@ -80,8 +80,16 @@ export default function ProductDetailPage() {
               {currentProduct.category && (
                 <>
                   <BreadcrumbItem>
-                    <BreadcrumbLink href={`/categories/${currentProduct.category.slug}`}>
-                      {currentProduct.category.name}
+                    <BreadcrumbLink 
+                      href={`/categories/${
+                        typeof currentProduct.category === 'string' 
+                          ? currentProduct.category 
+                          : currentProduct.category.slug || currentProduct.category._id
+                      }`}
+                    >
+                      {typeof currentProduct.category === 'string' 
+                        ? currentProduct.category 
+                        : currentProduct.category.name}
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />

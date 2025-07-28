@@ -9,7 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useCart, useWishlist } from '@/hooks';
 import { useWishlistStore } from '@/store';
-import { Product, ProductVariant } from '@/types';
+import { Product, ProductVariant, ProductRating } from '@/types';
 import { formatCurrency, generateStarRating } from '@/lib/utils';
 import { cn } from '@/lib/utils';
 
@@ -27,7 +27,8 @@ export function ProductInfo({ product }: ProductInfoProps) {
   
   const isInWishlistCheck = isInWishlist(product._id);
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
-  const stars = generateStarRating(product.rating?.average || 0);
+  const ratingValue = typeof product.rating === 'number' ? product.rating : product.rating?.average || 0;
+  const stars = generateStarRating(ratingValue);
 
   // Group variants by type
   const variantTypes = product.variants?.reduce((acc, variant) => {
@@ -93,7 +94,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
       </div>
 
       {/* Rating */}
-      {product.rating && product.rating.count > 0 && (
+      {product.rating && (typeof product.rating === 'number' ? product.rating > 0 : product.rating.count > 0) && (
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-1">
             {stars.map((star, index) => (
@@ -110,9 +111,18 @@ export function ProductInfo({ product }: ProductInfoProps) {
               />
             ))}
           </div>
-          <span className="text-sm text-muted-foreground">
-            {product.rating.average.toFixed(1)} ({product.rating.count} reviews)
-          </span>
+          <div className="flex items-center space-x-2 text-sm text-gray-500">
+            <div className="flex items-center">
+              {stars}
+              <span className="ml-1">
+                ({typeof product.rating === 'number' ? product.rating.toFixed(1) : product.rating.average.toFixed(1)})
+              </span>
+            </div>
+            <span>•</span>
+            <span>
+              {typeof product.rating === 'number' ? '0' : product.rating.count} {typeof product.rating === 'number' ? 'review' : product.rating.count === 1 ? 'review' : 'reviews'}
+            </span>
+          </div>
         </div>
       )}
 

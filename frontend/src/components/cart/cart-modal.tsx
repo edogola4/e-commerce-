@@ -120,7 +120,7 @@ export function CartModal() {
                 <div className="relative w-16 h-16 bg-muted rounded-md overflow-hidden flex-shrink-0">
                   <Image
                     src={getOptimizedImageUrl(
-                      product.images[0]?.url || '/placeholder.png',
+                      typeof product.images[0] === 'string' ? product.images[0] : product.images[0]?.url || '/placeholder.png',
                       { width: 64, height: 64 }
                     )}
                     alt={product.name}

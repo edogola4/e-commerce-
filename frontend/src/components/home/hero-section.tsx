@@ -2,10 +2,19 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, ShoppingBag, Star, ArrowRight } from 'lucide-react';
+import { 
+  ShoppingBag, 
+  Star, 
+  ArrowRight,
+  Truck,
+  Shield,
+  Sparkles,
+  Award,
+  Gift
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -19,8 +28,13 @@ interface HeroSlide {
   buttonText: string;
   buttonLink: string;
   badge?: string;
+  badgeColor?: string;
   backgroundColor: string;
   textColor: string;
+  features?: string[];
+  discount?: string;
+  originalPrice?: string;
+  salePrice?: string;
 }
 
 const heroSlides: HeroSlide[] = [
@@ -32,9 +46,14 @@ const heroSlides: HeroSlide[] = [
     image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800&h=600&fit=crop',
     buttonText: 'Shop Electronics',
     buttonLink: '/categories/electronics',
-    badge: 'Hot Deal',
-    backgroundColor: 'bg-gradient-to-r from-blue-600 to-purple-600',
+    badge: 'Hot Deal 🔥',
+    badgeColor: 'from-red-500 to-orange-500',
+    backgroundColor: 'from-blue-600 via-purple-600 to-indigo-600',
     textColor: 'text-white',
+    features: ['Free Shipping', '2-Year Warranty', 'Expert Support'],
+    discount: '50%',
+    originalPrice: 'KES 50,000',
+    salePrice: 'KES 25,000'
   },
   {
     id: '2',
@@ -44,9 +63,14 @@ const heroSlides: HeroSlide[] = [
     image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop',
     buttonText: 'Explore Fashion',
     buttonLink: '/categories/fashion',
-    badge: 'New Arrival',
-    backgroundColor: 'bg-gradient-to-r from-pink-500 to-rose-500',
+    badge: 'New Arrival ✨',
+    badgeColor: 'from-pink-500 to-purple-500',
+    backgroundColor: 'from-pink-500 via-rose-500 to-red-500',
     textColor: 'text-white',
+    features: ['Premium Materials', 'Trendy Designs', 'Size Guide'],
+    discount: '30%',
+    originalPrice: 'KES 8,000',
+    salePrice: 'KES 5,600'
   },
   {
     id: '3',
@@ -56,155 +80,263 @@ const heroSlides: HeroSlide[] = [
     image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop',
     buttonText: 'Shop Home',
     buttonLink: '/categories/home-garden',
-    backgroundColor: 'bg-gradient-to-r from-green-500 to-teal-500',
+    badge: 'Best Seller 🏆',
+    badgeColor: 'from-green-500 to-emerald-500',
+    backgroundColor: 'from-green-500 via-teal-500 to-cyan-500',
     textColor: 'text-white',
+    features: ['Eco-Friendly', 'Easy Assembly', 'Style Guide'],
+    discount: '40%',
+    originalPrice: 'KES 15,000',
+    salePrice: 'KES 9,000'
   },
 ];
 
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const progressInterval = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (!isAutoPlay) return;
+    setProgress(0);
+    progressInterval.current = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          setCurrentSlide((current) => (current + 1) % heroSlides.length);
+          return 0;
+        }
+        return prev + 2; // 5 seconds total (100 / 2 = 50 intervals * 100ms)
+      });
+    }, 100);
 
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlay]);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
+    return () => {
+      if (progressInterval.current) {
+        clearInterval(progressInterval.current);
+      }
+    };
+  }, [currentSlide]);
 
   const currentSlideData = heroSlides[currentSlide];
 
   return (
-    <section 
-      className="relative min-h-[600px] lg:min-h-[700px] overflow-hidden"
-      onMouseEnter={() => setIsAutoPlay(false)}
-      onMouseLeave={() => setIsAutoPlay(true)}
-    >
-      {/* Background */}
-      <div className={cn('absolute inset-0 transition-all duration-1000', currentSlideData.backgroundColor)} />
+    <section className="relative min-h-[80vh] lg:min-h-[90vh] overflow-hidden">
+      {/* Animated Background */}
+      <div className={cn('absolute inset-0 bg-gradient-to-br transition-all duration-1000', currentSlideData.backgroundColor)}>
+        {/* Floating orbs */}
+        <div className="absolute top-20 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-white/20 rounded-full blur-2xl animate-ping delay-500"></div>
+      </div>
       
-      {/* Background Image - FIXED: Added proper relative positioning */}
-      <div className="absolute inset-0 relative">
-        <Image
-          src={currentSlideData.image}
-          alt={currentSlideData.title}
-          fill
-          className="object-cover opacity-20"
-          priority={currentSlide === 0}
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-black/20" />
+      {/* Background Image with Parallax Effect */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div 
+          className="absolute inset-0 scale-110 transition-transform duration-1000"
+          style={{ transform: `translateX(${currentSlide * -2}px)` }}
+        >
+          <Image
+            src={currentSlideData.image}
+            alt={currentSlideData.title}
+            fill
+            className="object-cover opacity-30"
+            priority={currentSlide === 0}
+            sizes="100vw"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 h-full min-h-[600px] lg:min-h-[700px] flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+      <div className="relative z-10 container mx-auto px-4 h-full min-h-[80vh] lg:min-h-[90vh] flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
           {/* Text Content */}
-          <div className={cn('space-y-6 animate-in slide-in-from-left duration-1000', currentSlideData.textColor)}>
+          <div className="lg:col-span-7 space-y-8">
+            {/* Badge with animation */}
             {currentSlideData.badge && (
-              <Badge variant="secondary" className="w-fit text-sm font-medium">
-                {currentSlideData.badge}
-              </Badge>
+              <div className="animate-in slide-in-from-left duration-700 delay-200">
+                <Badge 
+                  variant="secondary" 
+                  className={cn(
+                    'px-4 py-2 text-sm font-bold bg-gradient-to-r text-white border-none shadow-lg animate-pulse',
+                    currentSlideData.badgeColor || 'from-blue-500 to-purple-500'
+                  )}
+                >
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  {currentSlideData.badge}
+                </Badge>
+              </div>
             )}
             
-            <div className="space-y-4">
-              <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                {currentSlideData.title}
-              </h1>
-              <p className="text-xl lg:text-2xl font-semibold opacity-90">
-                {currentSlideData.subtitle}
-              </p>
-              <p className="text-lg opacity-80 max-w-lg leading-relaxed">
-                {currentSlideData.description}
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" asChild className="group">
-                <Link href={currentSlideData.buttonLink}>
-                  <ShoppingBag className="mr-2 h-5 w-5" />
-                  {currentSlideData.buttonText}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
-              
-              <Button variant="outline" size="lg" asChild className="bg-white/10 border-white/20 text-white hover:bg-white/20">
-                <Link href="/deals">
-                  View All Deals
-                </Link>
-              </Button>
-            </div>
-
-            {/* Trust indicators */}
-            <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-6 pt-4">
-              <div className="flex items-center space-x-2">
-                <div className="flex">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <span className="text-sm opacity-80">4.8/5 Customer Rating</span>
+            {/* Main Content */}
+            <div className="space-y-6 animate-in slide-in-from-left duration-700 delay-300">
+              <div className="space-y-4">
+                <h1 className={cn(
+                  'text-5xl lg:text-7xl font-black leading-tight bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent',
+                  currentSlideData.textColor
+                )}>
+                  {currentSlideData.title}
+                </h1>
+                <p className={cn(
+                  'text-2xl lg:text-3xl font-bold opacity-90 bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent'
+                )}>
+                  {currentSlideData.subtitle}
+                </p>
+                <p className={cn(
+                  'text-lg lg:text-xl opacity-90 max-w-2xl leading-relaxed',
+                  currentSlideData.textColor
+                )}>
+                  {currentSlideData.description}
+                </p>
               </div>
-              <div className="text-sm opacity-80">
-                Free Shipping on Orders KES 1,000+
+
+              {/* Price Display */}
+              {currentSlideData.discount && (
+                <div className="flex items-center space-x-4 animate-in slide-in-from-left duration-700 delay-500">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/30">
+                    <div className="flex items-center space-x-4">
+                      <div className="text-center">
+                        <div className="text-3xl font-black text-white">{currentSlideData.discount}</div>
+                        <div className="text-sm text-white/80">OFF</div>
+                      </div>
+                      <div className="border-l border-white/30 pl-4">
+                        <div className="text-lg line-through text-white/60">{currentSlideData.originalPrice}</div>
+                        <div className="text-2xl font-bold text-yellow-300">{currentSlideData.salePrice}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 animate-in slide-in-from-left duration-700 delay-700">
+                <Button 
+                  size="lg" 
+                  asChild 
+                  className="group h-14 px-8 bg-white text-slate-900 hover:bg-white/90 font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                >
+                  <Link href={currentSlideData.buttonLink}>
+                    <ShoppingBag className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
+                    {currentSlideData.buttonText}
+                    <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-1 duration-300" />
+                  </Link>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  asChild 
+                  className="h-14 px-8 bg-white/10 border-2 border-white/30 text-white hover:bg-white/20 font-semibold text-lg rounded-2xl backdrop-blur-sm hover:scale-105 transition-all duration-300"
+                >
+                  <Link href="/deals">
+                    <Gift className="mr-3 h-5 w-5" />
+                    View All Deals
+                  </Link>
+                </Button>
+              </div>
+
+              {/* Features List */}
+              {currentSlideData.features && (
+                <div className="animate-in slide-in-from-left duration-700 delay-900">
+                  <div className="flex flex-wrap gap-3">
+                    {currentSlideData.features.map((feature, index) => (
+                      <div 
+                        key={index}
+                        className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/20"
+                      >
+                        <Check className="w-4 h-4 text-green-400" />
+                        <span className="text-white font-medium">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Trust Indicators */}
+              <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 pt-4 animate-in slide-in-from-left duration-700 delay-1100">
+                <div className="flex items-center space-x-3">
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <div className="text-white">
+                    <div className="font-bold">4.8/5</div>
+                    <div className="text-sm opacity-80">Customer Rating</div>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Truck className="h-6 w-6 text-green-400" />
+                  <div className="text-white">
+                    <div className="font-bold">Free Shipping</div>
+                    <div className="text-sm opacity-80">Orders KES 1,000+</div>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Shield className="h-6 w-6 text-blue-400" />
+                  <div className="text-white">
+                    <div className="font-bold">Secure Payment</div>
+                    <div className="text-sm opacity-80">SSL Protected</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Product showcase or additional content */}
-          <div className="hidden lg:block animate-in slide-in-from-right duration-1000">
-            <div className="relative">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-                <h3 className={cn('text-2xl font-bold mb-4', currentSlideData.textColor)}>
-                  Why Choose ECommercy?
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                      <span className="text-lg">🚚</span>
+          {/* Feature Showcase */}
+          <div className="lg:col-span-5 hidden lg:block">
+            <div className="animate-in slide-in-from-right duration-700 delay-500">
+              <div className="relative">
+                <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <div className="h-12 w-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+                      <Award className="h-6 w-6 text-white" />
                     </div>
-                    <span className={cn('font-medium', currentSlideData.textColor)}>
-                      Fast & Free Delivery
-                    </span>
+                    <div>
+                      <h3 className={cn('text-2xl font-bold', currentSlideData.textColor)}>
+                        Why Choose ECommercy?
+                      </h3>
+                      <p className="text-white/80">Premium shopping experience</p>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                      <span className="text-lg">🔒</span>
-                    </div>
-                    <span className={cn('font-medium', currentSlideData.textColor)}>
-                      Secure Payment
-                    </span>
+                  
+                  <div className="space-y-6">
+                    {[
+                      { icon: '🚚', title: 'Fast & Free Delivery', desc: 'Same-day delivery in Nairobi' },
+                      { icon: '🔒', title: 'Secure Payment', desc: 'Bank-level security & encryption' },
+                      { icon: '💎', title: 'Premium Quality', desc: 'Handpicked products & brands' },
+                      { icon: '🎯', title: 'AI-Powered Recommendations', desc: 'Personalized just for you' },
+                    ].map((item, index) => (
+                      <div 
+                        key={index}
+                        className="group flex items-center space-x-4 p-3 rounded-xl hover:bg-white/10 transition-all duration-300"
+                        style={{ animationDelay: `${(index + 1) * 200}ms` }}
+                      >
+                        <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-2xl">{item.icon}</span>
+                        </div>
+                        <div className="flex-1">
+                          <span className={cn('font-bold block', currentSlideData.textColor)}>
+                            {item.title}
+                          </span>
+                          <span className="text-white/70 text-sm">{item.desc}</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                      <span className="text-lg">💎</span>
+
+                  {/* Stats */}
+                  <div className="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/20">
+                    <div className="text-center">
+                      <div className="text-2xl font-black text-white">50K+</div>
+                      <div className="text-xs text-white/70">Happy Customers</div>
                     </div>
-                    <span className={cn('font-medium', currentSlideData.textColor)}>
-                      Premium Quality
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                      <span className="text-lg">🎯</span>
+                    <div className="text-center">
+                      <div className="text-2xl font-black text-white">1M+</div>
+                      <div className="text-xs text-white/70">Products</div>
                     </div>
-                    <span className={cn('font-medium', currentSlideData.textColor)}>
-                      AI-Powered Recommendations
-                    </span>
+                    <div className="text-center">
+                      <div className="text-2xl font-black text-white">24/7</div>
+                      <div className="text-xs text-white/70">Support</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -213,57 +345,38 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Navigation Controls */}
-      <div className="absolute inset-y-0 left-4 flex items-center">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={prevSlide}
-          className="h-12 w-12 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </Button>
-      </div>
-
-      <div className="absolute inset-y-0 right-4 flex items-center">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={nextSlide}
-          className="h-12 w-12 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </Button>
-      </div>
-
-      {/* Slide Indicators */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {heroSlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={cn(
-              'w-3 h-3 rounded-full transition-all duration-300',
-              index === currentSlide
-                ? 'bg-white scale-125'
-                : 'bg-white/50 hover:bg-white/75'
-            )}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-
-      {/* Progress bar */}
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20">
-        <div 
-          className="h-full bg-white transition-all duration-100 ease-linear"
-          style={{ 
-            width: isAutoPlay ? `${((currentSlide + 1) / heroSlides.length) * 100}%` : '0%' 
-          }}
-        />
-      </div>
+      {/* CSS for custom animations */}
+      <style jsx>{`
+        @keyframes Check {
+          0% { transform: scale(0) rotate(45deg); }
+          50% { transform: scale(1.2) rotate(45deg); }
+          100% { transform: scale(1) rotate(45deg); }
+        }
+        
+        .animate-check {
+          animation: Check 0.5s ease-out forwards;
+        }
+      `}</style>
     </section>
+  );
+}
+
+// Check component for features
+function Check({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M5 13l4 4L19 7"
+      />
+    </svg>
   );
 }

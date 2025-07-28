@@ -19,7 +19,10 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
         <TabsTrigger value="description">Description</TabsTrigger>
         <TabsTrigger value="specifications">Specifications</TabsTrigger>
         <TabsTrigger value="shipping">Shipping</TabsTrigger>
-        <TabsTrigger value="reviews">Reviews ({product.rating?.count || 0})</TabsTrigger>
+        {/*<TabsTrigger value="reviews">Reviews ({product.rating?.count || 0})</TabsTrigger>*/}
+        <TabsTrigger value="reviews">
+          Reviews ({typeof product.rating === 'number' ? 0 : product.rating?.count || 0})
+        </TabsTrigger>
       </TabsList>
 
       <TabsContent value="description" className="mt-6">
@@ -31,7 +34,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                 <p className="text-muted-foreground leading-relaxed">
                   {product.description}
                 </p>
-                
+
                 {product.features && product.features.length > 0 && (
                   <div>
                     <h4 className="font-medium mb-2">Key Features:</h4>
@@ -63,7 +66,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
         <Card>
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold mb-4">Product Specifications</h3>
-            
+
             {product.specifications && Object.keys(product.specifications).length > 0 ? (
               <div className="space-y-4">
                 {Object.entries(product.specifications).map(([key, value], index) => (
@@ -116,7 +119,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
         <Card>
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold mb-4">Shipping Information</h3>
-            
+
             <div className="space-y-4">
               {product.shipping ? (
                 <>
@@ -126,9 +129,9 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                       {product.shipping.freeShipping ? 'Free Shipping' : `KES ${product.shipping.shippingCost}`}
                     </span>
                   </div>
-                  
+
                   <Separator />
-                  
+
                   <div>
                     <h4 className="font-medium mb-2">Package Dimensions:</h4>
                     <div className="space-y-1 text-sm text-muted-foreground">
@@ -186,37 +189,38 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
             <div className="text-center py-8">
               <h3 className="text-lg font-semibold mb-2">Customer Reviews</h3>
               <p className="text-muted-foreground mb-4">
-                {product.rating?.count || 0} review{(product.rating?.count || 0) !== 1 ? 's' : ''}
+                {/*{product.rating?.count || 0} review{(product.rating?.count || 0) !== 1 ? 's' : ''}*/}
+                {typeof product.rating === 'number' ? 0 : product.rating?.count || 0} review{(typeof product.rating === 'number' ? 0 : product.rating?.count || 0) !== 1 ? 's' : ''}
               </p>
-              
-              {product.rating && product.rating.count > 0 ? (
+
+              {product.rating && typeof product.rating === 'object' && product.rating.count > 0 ? (
                 <div className="space-y-4">
                   <div className="flex items-center justify-center space-x-2">
-                    <span className="text-2xl font-bold">{product.rating.average.toFixed(1)}</span>
+                    <span className="text-2xl font-bold">{typeof product.rating === 'number' ? 0 : product.rating.average.toFixed(1)}</span>
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
-                        <span key={i} className={`text-lg ${i < Math.round(product.rating!.average) ? 'text-yellow-400' : 'text-gray-300'}`}>
+                        <span key={i} className={`text-lg ${i < Math.round(typeof product.rating === 'number' ? 0 : product.rating!.average) ? 'text-yellow-400' : 'text-gray-300'}`}>
                           ★
                         </span>
                       ))}
                     </div>
                   </div>
-                  
-                  {product.rating.distribution && (
+
+                  {typeof product.rating === 'object' && product.rating.distribution && (
                     <div className="space-y-2 max-w-xs mx-auto">
                       {[5, 4, 3, 2, 1].map((rating) => (
                         <div key={rating} className="flex items-center space-x-2 text-sm">
                           <span className="w-8">{rating}★</span>
                           <div className="flex-1 h-2 bg-gray-200 rounded">
-                            <div 
+                            <div
                               className="h-2 bg-yellow-400 rounded"
-                              style={{ 
-                                width: `${((product.rating!.distribution[rating as keyof typeof product.rating.distribution] || 0) / product.rating!.count) * 100}%` 
+                              style={{
+                                width: `${((typeof product.rating === 'number' ? 0 : product.rating!.distribution[rating as keyof typeof product.rating.distribution]) || 0) / (typeof product.rating === 'number' ? 0 : product.rating!.count)} * 100}%`
                               }}
                             />
                           </div>
                           <span className="w-8 text-right">
-                            {product.rating.distribution[rating as keyof typeof product.rating.distribution] || 0}
+                            {typeof product.rating === 'number' ? 0 : product.rating!.distribution[rating as keyof typeof product.rating.distribution] || 0}
                           </span>
                         </div>
                       ))}

@@ -88,10 +88,10 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
     );
   };
 
-  const getAverageRating = () => {
+  const getAverageRating = (): number => {
     if (!reviews.length) return 0;
     const total = reviews.reduce((sum, review) => sum + review.rating, 0);
-    return (total / reviews.length).toFixed(1);
+    return Number((total / reviews.length).toFixed(1));
   };
 
   const getRatingDistribution = () => {
@@ -157,8 +157,8 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="text-3xl font-bold">{averageRating}</span>
-              {renderStars(Math.round(parseFloat(averageRating)), 'lg')}
+              <span className="text-3xl font-bold">{averageRating.toFixed(1)}</span>
+              {renderStars(Math.round(averageRating), 'lg')}
               <span className="text-sm text-muted-foreground">
                 ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
               </span>

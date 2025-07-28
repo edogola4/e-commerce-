@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, Maximize2, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { Product } from '@/types';
+import { Product, ProductImage } from '@/types';
 import { getOptimizedImageUrl, calculateDiscountPercentage } from '@/lib/utils';
 import { cn } from '@/lib/utils';
 
@@ -47,6 +47,16 @@ export function ProductImageGallery({ product }: ProductImageGalleryProps) {
     }
   };
 
+  // Helper function to get image URL
+  const getImageUrl = (image: string | ProductImage): string => {
+    return typeof image === 'string' ? image : image.url;
+  };
+
+  // Helper function to get image alt text
+  const getImageAlt = (image: string | ProductImage, defaultAlt: string): string => {
+    return typeof image === 'string' ? defaultAlt : (image.alt || defaultAlt);
+  };
+
   if (images.length === 0) {
     return (
       <div className="space-y-4">
@@ -63,8 +73,8 @@ export function ProductImageGallery({ product }: ProductImageGalleryProps) {
       <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group">
         {selectedImage && (
           <Image
-            src={getOptimizedImageUrl(selectedImage.url, { width: 600, height: 600 })}
-            alt={selectedImage.alt || product.name}
+            src={getOptimizedImageUrl(getImageUrl(selectedImage), { width: 600, height: 600 })}
+            alt={getImageAlt(selectedImage, product.name)}
             fill
             className={cn(
               'object-cover transition-all duration-300',
@@ -111,8 +121,8 @@ export function ProductImageGallery({ product }: ProductImageGalleryProps) {
             <DialogContent className="max-w-4xl w-full">
               <div className="relative aspect-square">
                 <Image
-                  src={getOptimizedImageUrl(selectedImage.url, { width: 1200, height: 1200 })}
-                  alt={selectedImage.alt || product.name}
+                  src={getOptimizedImageUrl(getImageUrl(selectedImage), { width: 1200, height: 1200 })}
+                  alt={getImageAlt(selectedImage, product.name)}
                   fill
                   className="object-contain"
                   sizes="90vw"
@@ -180,8 +190,8 @@ export function ProductImageGallery({ product }: ProductImageGalleryProps) {
               }}
             >
               <Image
-                src={getOptimizedImageUrl(image.url, { width: 100, height: 100 })}
-                alt={image.alt || `${product.name} ${index + 1}`}
+                src={getOptimizedImageUrl(getImageUrl(image), { width: 100, height: 100 })}
+                alt={getImageAlt(image, `${product.name} ${index + 1}`)}
                 fill
                 className="object-cover"
                 sizes="100px"

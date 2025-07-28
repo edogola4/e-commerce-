@@ -1,6 +1,8 @@
 // src/types/index.ts
 // src/types/index.ts
 export interface ApiResponse<T = any> {
+  user: any;
+  token: any;
   success: boolean;
   message: string;
   data?: T;
@@ -33,6 +35,9 @@ export interface QueryParams {
 
 // User types
 export interface User {
+  lastName: string;
+  firstName: string;
+  orders: any;
   _id: string;
   name: string;
   email: string;
