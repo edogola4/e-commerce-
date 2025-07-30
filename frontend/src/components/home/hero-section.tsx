@@ -53,7 +53,7 @@ const heroSlides: HeroSlide[] = [
     features: ['Free Shipping', '2-Year Warranty', 'Expert Support'],
     discount: '50%',
     originalPrice: 'KES 50,000',
-    salePrice: 'KES 25,000'
+    salePrice: 'KES 25,000',
   },
   {
     id: '2',
