@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const User = require('../models/User');
 const { AppError, asyncHandler } = require('../middleware/errorHandler');
 const { uploadToCloudinary } = require('../config/cloudinary');
+const { loginAttemptTracker } = require('../utils/loginAttempts');
 
 // Generate JWT token and send response
 const sendTokenResponse = (user, statusCode, res, message = 'Success') => {
@@ -35,6 +36,24 @@ const sendTokenResponse = (user, statusCode, res, message = 'Success') => {
 // @access  Public
 const register = asyncHandler(async (req, res, next) => {
   const { firstName, lastName, email, password, phone } = req.body;
+  const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'];
+
+  // Get reCAPTCHA verification result if provided
+  const recaptchaResult = req.recaptcha || {};
+
+  // Log registration attempt
+  console.log('Registration attempt:', {
+    email,
+    ip: clientIP,
+    hasCaptcha: !!req.body.captchaToken,
+    captchaVerified: recaptchaResult.verified || false,
+    timestamp: new Date().toISOString()
+  });
+
+  // If captcha was provided but failed verification
+  if (req.body.captchaToken && !recaptchaResult.verified) {
+    return next(new AppError('Security verification failed. Please try again.', 400));
+  }
   
   // Check if user already exists
   const existingUser = await User.findOne({
@@ -65,6 +84,16 @@ const register = asyncHandler(async (req, res, next) => {
   
   // Send verification email (implement email service)
   // await sendVerificationEmail(user.email, verificationToken);
+
+  // Log successful registration
+  console.log('Successful registration:', {
+    userId: user._id,
+    email: user.email,
+    ip: clientIP,
+    usedCaptcha: !!req.body.captchaToken,
+    captchaScore: recaptchaResult.score,
+    timestamp: new Date().toISOString()
+  });
   
   sendTokenResponse(user, 201, res, 'User registered successfully');
 });
@@ -73,13 +102,78 @@ const register = asyncHandler(async (req, res, next) => {
 // @route   POST /api/auth/login
 // @access  Public
 const login = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, rememberMe } = req.body;
+  const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'];
+
+  // Get attempt information from rate limiting middleware
+  const { count: attemptCount, requiresCaptcha, maxAttempts } = req.loginAttempts || {};
+  
+  // Get reCAPTCHA verification result from middleware
+  const recaptchaResult = req.recaptcha || {};
+
+  // Log login attempt for security monitoring
+  console.log('Login attempt:', {
+    email,
+    ip: clientIP,
+    attempts: attemptCount || 0,
+    requiresCaptcha: requiresCaptcha || false,
+    hasCaptcha: !!req.body.captchaToken,
+    captchaVerified: recaptchaResult.verified || false,
+    timestamp: new Date().toISOString()
+  });
+
+  // Check if reCAPTCHA is required but failed verification
+  if (requiresCaptcha && req.body.captchaToken && !recaptchaResult.verified) {
+    // Record failed attempt
+    loginAttemptTracker.recordFailedAttempt(email, clientIP);
+
+    return res.status(400).json({
+      success: false,
+      message: 'Security verification failed. Please try again.',
+      requiresCaptcha: true,
+      captchaError: recaptchaResult.error || 'reCAPTCHA verification failed',
+      attemptsRemaining: Math.max(0, maxAttempts - (attemptCount + 1))
+    });
+  }
+
+  // Check if reCAPTCHA is required but not provided
+  if (requiresCaptcha && !req.body.captchaToken) {
+    return res.status(400).json({
+      success: false,
+      message: 'Security verification required due to multiple failed attempts.',
+      requiresCaptcha: true,
+      failedAttempts: attemptCount,
+      attemptsRemaining: Math.max(0, maxAttempts - attemptCount)
+    });
+  }
   
   // Find user and include password
   const user = await User.findOne({ email }).select('+password');
   
   if (!user) {
-    return next(new AppError('Invalid credentials', 401));
+    // Record failed attempt
+    const attemptData = loginAttemptTracker.recordFailedAttempt(email, clientIP);
+    
+    // Log failed attempt
+    console.log('Failed login attempt:', {
+      email,
+      ip: clientIP,
+      totalAttempts: attemptData.count,
+      willRequireCaptcha: attemptData.count >= 3,
+      lockedUntil: attemptData.lockedUntil ? new Date(attemptData.lockedUntil).toISOString() : null,
+      timestamp: new Date().toISOString()
+    });
+
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid credentials',
+      requiresCaptcha: attemptData.count >= 3,
+      attemptsRemaining: Math.max(0, (maxAttempts || 5) - attemptData.count),
+      ...(attemptData.lockedUntil && {
+        locked: true,
+        timeUntilUnlock: attemptData.lockedUntil - Date.now()
+      })
+    });
   }
   
   // Check if account is locked
@@ -91,21 +185,92 @@ const login = asyncHandler(async (req, res, next) => {
   const isPasswordCorrect = await user.comparePassword(password);
   
   if (!isPasswordCorrect) {
-    // Increment login attempts
+    // Increment login attempts on user model
     await user.incLoginAttempts();
-    return next(new AppError('Invalid credentials', 401));
+    
+    // Record failed attempt for IP/email tracking
+    const attemptData = loginAttemptTracker.recordFailedAttempt(email, clientIP);
+    
+    // Log failed attempt
+    console.log('Failed login attempt:', {
+      email,
+      ip: clientIP,
+      totalAttempts: attemptData.count,
+      willRequireCaptcha: attemptData.count >= 3,
+      lockedUntil: attemptData.lockedUntil ? new Date(attemptData.lockedUntil).toISOString() : null,
+      timestamp: new Date().toISOString()
+    });
+
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid credentials',
+      requiresCaptcha: attemptData.count >= 3,
+      attemptsRemaining: Math.max(0, (maxAttempts || 5) - attemptData.count),
+      ...(attemptData.lockedUntil && {
+        locked: true,
+        timeUntilUnlock: attemptData.lockedUntil - Date.now()
+      })
+    });
   }
   
   // Reset login attempts on successful login
   if (user.loginAttempts && user.loginAttempts > 0) {
     await user.resetLoginAttempts();
   }
+
+  // Clear failed attempts on successful login
+  loginAttemptTracker.clearAttempts(email, clientIP);
   
   // Update last login
   user.lastLogin = new Date();
   await user.save({ validateBeforeSave: false });
+
+  // Log successful login
+  console.log('Successful login:', {
+    userId: user._id,
+    email: user.email,
+    ip: clientIP,
+    rememberMe: !!rememberMe,
+    hadPreviousAttempts: attemptCount > 0,
+    usedCaptcha: !!req.body.captchaToken,
+    captchaScore: recaptchaResult.score,
+    timestamp: new Date().toISOString()
+  });
   
-  sendTokenResponse(user, 200, res, 'Login successful');
+  // Generate token with remember me support
+  const token = rememberMe ? user.generateAuthToken('30d') : user.generateAuthToken();
+  
+  const options = {
+    expires: new Date(Date.now() + (rememberMe ? 30 : 1) * 24 * 60 * 60 * 1000),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict'
+  };
+  
+  // Remove password from output
+  user.password = undefined;
+  
+  res.status(200)
+    .cookie('token', token, options)
+    .json({
+      success: true,
+      message: 'Login successful',
+      token,
+      expiresIn: rememberMe ? '30d' : '24h',
+      data: {
+        user: {
+          id: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
+          role: user.role,
+          isEmailVerified: user.isEmailVerified,
+          avatar: user.avatar,
+          lastLogin: user.lastLogin
+        }
+      }
+    });
 });
 
 // @desc    Logout user
@@ -242,6 +407,15 @@ const changePassword = asyncHandler(async (req, res, next) => {
 // @access  Public
 const forgotPassword = asyncHandler(async (req, res, next) => {
   const { email } = req.body;
+  const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'];
+
+  // Get reCAPTCHA verification result if provided
+  const recaptchaResult = req.recaptcha || {};
+
+  // If captcha was provided but failed verification
+  if (req.body.captchaToken && !recaptchaResult.verified) {
+    return next(new AppError('Security verification failed. Please try again.', 400));
+  }
   
   const user = await User.findOne({ email });
   
@@ -265,6 +439,15 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
   
   // Create reset URL
   const resetUrl = `${req.protocol}://${req.get('host')}/api/auth/reset-password/${resetToken}`;
+
+  // Log password reset request
+  console.log('Password reset requested:', {
+    userId: user._id,
+    email: user.email,
+    ip: clientIP,
+    usedCaptcha: !!req.body.captchaToken,
+    timestamp: new Date().toISOString()
+  });
   
   try {
     // Send email (implement email service)

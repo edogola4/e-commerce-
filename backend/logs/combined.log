@@ -933,3 +933,12 @@
 {"level":"warn","message":"Rate limit exceeded for IP: ::1, endpoint: /api/products?sort=-createdAt&limit=8&isActive=true","timestamp":"2025-07-28T07:44:37.850Z"}
 {"level":"warn","message":"Rate limit exceeded for IP: ::1, endpoint: /api/categories","timestamp":"2025-07-28T07:44:37.881Z"}
 {"level":"warn","message":"Rate limit exceeded for IP: ::1, endpoint: /api/auth/login","timestamp":"2025-07-28T07:45:00.234Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-28T10:24:46.456Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-28T10:24:46.464Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-28T10:24:46.734Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-28T10:24:46.738Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-28T10:24:46.740Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-28T10:24:46.742Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-28T10:24:46.743Z"}
+{"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-28T10:24:46.747Z"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2025-07-30T07:27:45.255Z"}
