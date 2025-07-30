@@ -347,8 +347,6 @@ module.exports = {
   loginAttemptTracker
 };
 
-// src/middleware/rateLimiting.js
-const { loginAttemptTracker } = require('../utils/loginAttempts');
 
 /**
  * Rate limiting middleware for login attempts

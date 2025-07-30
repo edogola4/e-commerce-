@@ -942,3 +942,21 @@
 {"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-28T10:24:46.743Z"}
 {"level":"warn","message":"CORS blocked request from origin: http://192.168.0.108:3000","timestamp":"2025-07-28T10:24:46.747Z"}
 {"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2025-07-30T07:27:45.255Z"}
+{"level":"info","message":"✅ Auth routes loaded successfully","timestamp":"2025-07-30T07:46:46.652Z"}
+{"level":"info","message":"✅ Products routes loaded successfully","timestamp":"2025-07-30T07:46:46.658Z"}
+{"level":"info","message":"✅ Categories routes loaded successfully","timestamp":"2025-07-30T07:46:46.659Z"}
+{"level":"info","message":"✅ Users routes loaded successfully","timestamp":"2025-07-30T07:46:46.662Z"}
+{"level":"info","message":"✅ Orders routes loaded successfully","timestamp":"2025-07-30T07:46:46.663Z"}
+{"level":"info","message":"✅ Reviews routes loaded successfully","timestamp":"2025-07-30T07:46:46.665Z"}
+{"level":"info","message":"✅ Recommendations routes loaded successfully","timestamp":"2025-07-30T07:46:46.666Z"}
+{"level":"info","message":"✅ Checkout routes loaded successfully","timestamp":"2025-07-30T07:46:46.666Z"}
+{"level":"info","message":"✅ Inventory routes loaded successfully","timestamp":"2025-07-30T07:46:46.667Z"}
+{"level":"info","message":"✅ Email routes loaded successfully","timestamp":"2025-07-30T07:46:46.682Z"}
+{"level":"info","message":"✅ Tracking routes loaded successfully","timestamp":"2025-07-30T07:46:46.683Z"}
+{"level":"info","message":"✅ Payments routes loaded successfully","timestamp":"2025-07-30T07:46:46.705Z"}
+{"level":"info","message":"🚀 Server running in development mode on port 5001","timestamp":"2025-07-30T07:46:46.707Z"}
+{"level":"info","message":"🏠 Root endpoint: http://localhost:5001/","timestamp":"2025-07-30T07:46:46.707Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:5001/api","timestamp":"2025-07-30T07:46:46.707Z"}
+{"level":"info","message":"🏥 Health Check: http://localhost:5001/health","timestamp":"2025-07-30T07:46:46.707Z"}
+{"level":"info","message":"📊 Server Status: http://localhost:5001/api/status","timestamp":"2025-07-30T07:46:46.707Z"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2025-07-30T07:50:16.109Z"}
