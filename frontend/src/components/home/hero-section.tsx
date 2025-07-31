@@ -1,19 +1,26 @@
-// src/components/home/hero-section.tsx
-
+// frontend/src/components/home/hero-section.tsx
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { 
-  ShoppingBag, 
-  Star, 
+import {
+  ShoppingBag,
+  Star,
   ArrowRight,
   Truck,
   Shield,
   Sparkles,
   Award,
-  Gift
+  Gift,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+  TrendingUp,
+  Users,
+  Globe,
+  Zap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -27,76 +34,141 @@ interface HeroSlide {
   image: string;
   buttonText: string;
   buttonLink: string;
+  secondaryButtonText?: string;
+  secondaryButtonLink?: string;
   badge?: string;
-  badgeColor?: string;
-  backgroundColor: string;
-  textColor: string;
+  badgeVariant?: 'hot' | 'new' | 'bestseller' | 'limited';
+  colorScheme: 'slate' | 'emerald' | 'blue' | 'violet';
   features?: string[];
   discount?: string;
   originalPrice?: string;
   salePrice?: string;
+  stats?: {
+    customers: string;
+    products: string;
+    rating: string;
+  };
 }
 
 const heroSlides: HeroSlide[] = [
   {
     id: '1',
-    title: 'Latest Electronics',
-    subtitle: 'Up to 50% Off',
-    description: 'Discover cutting-edge technology with our exclusive deals on smartphones, laptops, and smart home devices.',
-    image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800&h=600&fit=crop',
-    buttonText: 'Shop Electronics',
+    title: 'Premium Electronics',
+    subtitle: 'Professional-Grade Technology',
+    description: 'Discover enterprise-quality electronics with cutting-edge features, professional warranties, and dedicated business support.',
+    image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1200&h=800&fit=crop&q=80',
+    buttonText: 'Explore Electronics',
     buttonLink: '/categories/electronics',
-    badge: 'Hot Deal 🔥',
-    badgeColor: 'from-red-500 to-orange-500',
-    backgroundColor: 'from-blue-600 via-purple-600 to-indigo-600',
-    textColor: 'text-white',
-    features: ['Free Shipping', '2-Year Warranty', 'Expert Support'],
-    discount: '50%',
-    originalPrice: 'KES 50,000',
-    salePrice: 'KES 25,000',
+    secondaryButtonText: 'Request Demo',
+    secondaryButtonLink: '/demo',
+    badge: 'Business Solutions',
+    badgeVariant: 'hot',
+    colorScheme: 'slate',
+    features: ['Enterprise Support', 'Bulk Pricing', 'Extended Warranty', 'White-glove Setup'],
+    discount: '25%',
+    originalPrice: 'KES 80,000',
+    salePrice: 'KES 60,000',
+    stats: {
+      customers: '10K+',
+      products: '500+',
+      rating: '4.9'
+    }
   },
   {
     id: '2',
-    title: 'Fashion Forward',
-    subtitle: 'New Season Collection',
-    description: 'Step into style with our latest fashion collection featuring trendy designs and premium quality materials.',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop',
-    buttonText: 'Explore Fashion',
+    title: 'Sustainable Fashion',
+    subtitle: 'Conscious Commerce Collection',
+    description: 'Ethically sourced, premium fashion with transparent supply chains and carbon-neutral shipping.',
+    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=800&fit=crop&q=80',
+    buttonText: 'Shop Sustainably',
     buttonLink: '/categories/fashion',
-    badge: 'New Arrival ✨',
-    badgeColor: 'from-pink-500 to-purple-500',
-    backgroundColor: 'from-pink-500 via-rose-500 to-red-500',
-    textColor: 'text-white',
-    features: ['Premium Materials', 'Trendy Designs', 'Size Guide'],
+    secondaryButtonText: 'Sustainability Report',
+    secondaryButtonLink: '/sustainability',
+    badge: 'Eco-Certified',
+    badgeVariant: 'new',
+    colorScheme: 'emerald',
+    features: ['Carbon Neutral', 'Fair Trade', 'Organic Materials', 'Circular Design'],
     discount: '30%',
-    originalPrice: 'KES 8,000',
-    salePrice: 'KES 5,600'
+    originalPrice: 'KES 12,000',
+    salePrice: 'KES 8,400',
+    stats: {
+      customers: '25K+',
+      products: '1.2K+',
+      rating: '4.8'
+    }
   },
   {
     id: '3',
-    title: 'Home & Garden',
-    subtitle: 'Transform Your Space',
-    description: 'Create your perfect living space with our curated collection of home decor and garden essentials.',
-    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop',
-    buttonText: 'Shop Home',
-    buttonLink: '/categories/home-garden',
-    badge: 'Best Seller 🏆',
-    badgeColor: 'from-green-500 to-emerald-500',
-    backgroundColor: 'from-green-500 via-teal-500 to-cyan-500',
-    textColor: 'text-white',
-    features: ['Eco-Friendly', 'Easy Assembly', 'Style Guide'],
-    discount: '40%',
-    originalPrice: 'KES 15,000',
-    salePrice: 'KES 9,000'
+    title: 'Smart Living Solutions',
+    subtitle: 'Connected Home Ecosystem',
+    description: 'Transform your space with intelligent home solutions designed for modern living and enhanced productivity.',
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&h=800&fit=crop&q=80',
+    buttonText: 'Smart Home Setup',
+    buttonLink: '/categories/smart-home',
+    secondaryButtonText: 'Consultation',
+    secondaryButtonLink: '/consultation',
+    badge: 'IoT Ready',
+    badgeVariant: 'bestseller',
+    colorScheme: 'blue',
+    features: ['Smart Integration', 'Voice Control', 'Energy Monitoring', 'Security Suite'],
+    discount: '35%',
+    originalPrice: 'KES 25,000',
+    salePrice: 'KES 16,250',
+    stats: {
+      customers: '15K+',
+      products: '800+',
+      rating: '4.9'
+    }
   },
 ];
+
+const colorSchemes = {
+  slate: {
+    primary: 'from-slate-900 via-slate-800 to-slate-900',
+    accent: 'from-blue-500 to-indigo-600',
+    glass: 'bg-slate-900/20 border-slate-700/30',
+    text: 'text-slate-100',
+    textSecondary: 'text-slate-300'
+  },
+  emerald: {
+    primary: 'from-emerald-900 via-teal-800 to-emerald-900',
+    accent: 'from-emerald-400 to-teal-500',
+    glass: 'bg-emerald-900/20 border-emerald-700/30',
+    text: 'text-emerald-50',
+    textSecondary: 'text-emerald-200'
+  },
+  blue: {
+    primary: 'from-blue-900 via-indigo-800 to-blue-900',
+    accent: 'from-blue-400 to-cyan-500',
+    glass: 'bg-blue-900/20 border-blue-700/30',
+    text: 'text-blue-50',
+    textSecondary: 'text-blue-200'
+  },
+  violet: {
+    primary: 'from-violet-900 via-purple-800 to-violet-900',
+    accent: 'from-violet-400 to-purple-500',
+    glass: 'bg-violet-900/20 border-violet-700/30',
+    text: 'text-violet-50',
+    textSecondary: 'text-violet-200'
+  }
+};
+
+const badgeVariants = {
+  hot: { bg: 'bg-gradient-to-r from-red-500 to-orange-500', icon: '🔥' },
+  new: { bg: 'bg-gradient-to-r from-green-500 to-emerald-500', icon: '✨' },
+  bestseller: { bg: 'bg-gradient-to-r from-amber-500 to-yellow-500', icon: '🏆' },
+  limited: { bg: 'bg-gradient-to-r from-purple-500 to-pink-500', icon: '⚡' }
+};
 
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
   const progressInterval = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    if (!isPlaying) return;
+
     setProgress(0);
     progressInterval.current = setInterval(() => {
       setProgress(prev => {
@@ -104,7 +176,7 @@ export function HeroSection() {
           setCurrentSlide((current) => (current + 1) % heroSlides.length);
           return 0;
         }
-        return prev + 2; // 5 seconds total (100 / 2 = 50 intervals * 100ms)
+        return prev + 1.25; // 8 seconds total
       });
     }, 100);
 
@@ -113,229 +185,283 @@ export function HeroSection() {
         clearInterval(progressInterval.current);
       }
     };
-  }, [currentSlide]);
+  }, [currentSlide, isPlaying]);
 
   const currentSlideData = heroSlides[currentSlide];
+  const currentColors = colorSchemes[currentSlideData.colorScheme];
+
+  const nextSlide = () => {
+    setCurrentSlide((current) => (current + 1) % heroSlides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((current) => (current - 1 + heroSlides.length) % heroSlides.length);
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
 
   return (
-    <section className="relative min-h-[80vh] lg:min-h-[90vh] overflow-hidden">
-      {/* Animated Background */}
-      <div className={cn('absolute inset-0 bg-gradient-to-br transition-all duration-1000', currentSlideData.backgroundColor)}>
-        {/* Floating orbs */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-white/20 rounded-full blur-2xl animate-ping delay-500"></div>
+    <section className="relative min-h-[100vh] overflow-hidden">
+      {/* Background with Enhanced Gradients */}
+      <div className={cn(
+        'absolute inset-0 bg-gradient-to-br transition-all duration-1000',
+        currentColors.primary
+      )}>
+        {/* Sophisticated background patterns */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-y-12"></div>
+          <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-white/10 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-white/10 to-transparent rounded-full blur-2xl animate-pulse"></div>
+        </div>
       </div>
-      
-      {/* Background Image with Parallax Effect */}
+
+      {/* Hero Image with Parallax */}
       <div className="absolute inset-0 overflow-hidden">
-        <div 
-          className="absolute inset-0 scale-110 transition-transform duration-1000"
-          style={{ transform: `translateX(${currentSlide * -2}px)` }}
-        >
+        <div className="absolute inset-0 scale-105 transition-all duration-1000 ease-out">
           <Image
             src={currentSlideData.image}
             alt={currentSlideData.title}
             fill
-            className="object-cover opacity-30"
+            className="object-cover opacity-20"
             priority={currentSlide === 0}
             sizes="100vw"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/20" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 h-full min-h-[80vh] lg:min-h-[90vh] flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
-          {/* Text Content */}
-          <div className="lg:col-span-7 space-y-8">
-            {/* Badge with animation */}
+      {/* Main Content */}
+      <div className="relative z-10 container mx-auto px-6 lg:px-8 h-full min-h-[100vh] flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
+
+          {/* Content Section */}
+          <div className="space-y-8 lg:pr-8">
+            {/* Badge */}
             {currentSlideData.badge && (
               <div className="animate-in slide-in-from-left duration-700 delay-200">
-                <Badge 
-                  variant="secondary" 
-                  className={cn(
-                    'px-4 py-2 text-sm font-bold bg-gradient-to-r text-white border-none shadow-lg animate-pulse',
-                    currentSlideData.badgeColor || 'from-blue-500 to-purple-500'
-                  )}
-                >
-                  <Sparkles className="w-4 h-4 mr-2" />
+                <Badge className={cn(
+                  'px-4 py-2 text-sm font-semibold text-white border-none shadow-lg',
+                  badgeVariants[currentSlideData.badgeVariant || 'hot'].bg
+                )}>
+                  <span className="mr-2">{badgeVariants[currentSlideData.badgeVariant || 'hot'].icon}</span>
                   {currentSlideData.badge}
                 </Badge>
               </div>
             )}
-            
-            {/* Main Content */}
+
+            {/* Main Heading */}
             <div className="space-y-6 animate-in slide-in-from-left duration-700 delay-300">
               <div className="space-y-4">
                 <h1 className={cn(
-                  'text-5xl lg:text-7xl font-black leading-tight bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent',
-                  currentSlideData.textColor
+                  'text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight',
+                  currentColors.text
                 )}>
                   {currentSlideData.title}
                 </h1>
                 <p className={cn(
-                  'text-2xl lg:text-3xl font-bold opacity-90 bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent'
+                  'text-xl lg:text-2xl font-medium bg-gradient-to-r bg-clip-text text-transparent',
+                  currentColors.accent
                 )}>
                   {currentSlideData.subtitle}
                 </p>
                 <p className={cn(
-                  'text-lg lg:text-xl opacity-90 max-w-2xl leading-relaxed',
-                  currentSlideData.textColor
+                  'text-lg leading-relaxed max-w-xl',
+                  currentColors.textSecondary
                 )}>
                   {currentSlideData.description}
                 </p>
               </div>
 
-              {/* Price Display */}
+              {/* Pricing Card */}
               {currentSlideData.discount && (
-                <div className="flex items-center space-x-4 animate-in slide-in-from-left duration-700 delay-500">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/30">
-                    <div className="flex items-center space-x-4">
-                      <div className="text-center">
-                        <div className="text-3xl font-black text-white">{currentSlideData.discount}</div>
-                        <div className="text-sm text-white/80">OFF</div>
+                <div className="animate-in slide-in-from-left duration-700 delay-500">
+                  <div className={cn(
+                    'inline-flex items-center space-x-6 rounded-2xl p-6 backdrop-blur-xl border shadow-2xl',
+                    currentColors.glass
+                  )}>
+                    <div className="text-center">
+                      <div className={cn('text-3xl font-bold', currentColors.text)}>
+                        {currentSlideData.discount}
                       </div>
-                      <div className="border-l border-white/30 pl-4">
-                        <div className="text-lg line-through text-white/60">{currentSlideData.originalPrice}</div>
-                        <div className="text-2xl font-bold text-yellow-300">{currentSlideData.salePrice}</div>
+                      <div className={cn('text-sm font-medium', currentColors.textSecondary)}>
+                        OFF
+                      </div>
+                    </div>
+                    <div className={cn('border-l pl-6', `border-${currentSlideData.colorScheme}-700/30`)}>
+                      <div className={cn('text-lg line-through', currentColors.textSecondary)}>
+                        {currentSlideData.originalPrice}
+                      </div>
+                      <div className={cn('text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent', currentColors.accent)}>
+                        {currentSlideData.salePrice}
                       </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Action Buttons */}
+              {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 animate-in slide-in-from-left duration-700 delay-700">
-                <Button 
-                  size="lg" 
-                  asChild 
-                  className="group h-14 px-8 bg-white text-slate-900 hover:bg-white/90 font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                <Button
+                  size="lg"
+                  asChild
+                  className={cn(
+                    'group h-14 px-8 font-semibold text-lg rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 bg-gradient-to-r text-white border-none',
+                    currentColors.accent
+                  )}
                 >
                   <Link href={currentSlideData.buttonLink}>
-                    <ShoppingBag className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
+                    <ShoppingBag className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
                     {currentSlideData.buttonText}
-                    <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-1 duration-300" />
+                    <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1 duration-300" />
                   </Link>
                 </Button>
-                
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  asChild 
-                  className="h-14 px-8 bg-white/10 border-2 border-white/30 text-white hover:bg-white/20 font-semibold text-lg rounded-2xl backdrop-blur-sm hover:scale-105 transition-all duration-300"
-                >
-                  <Link href="/deals">
-                    <Gift className="mr-3 h-5 w-5" />
-                    View All Deals
-                  </Link>
-                </Button>
+
+                {currentSlideData.secondaryButtonText && (
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    asChild
+                    className={cn(
+                      'h-14 px-8 font-semibold text-lg rounded-xl backdrop-blur-sm hover:scale-105 transition-all duration-300 border-2',
+                      currentColors.glass,
+                      currentColors.text,
+                      `hover:${currentColors.glass.replace('/20', '/30')}`
+                    )}
+                  >
+                    <Link href={currentSlideData.secondaryButtonLink || '#'}>
+                      {currentSlideData.secondaryButtonText}
+                    </Link>
+                  </Button>
+                )}
               </div>
 
-              {/* Features List */}
+              {/* Features Grid */}
               {currentSlideData.features && (
                 <div className="animate-in slide-in-from-left duration-700 delay-900">
-                  <div className="flex flex-wrap gap-3">
+                  <div className="grid grid-cols-2 gap-3">
                     {currentSlideData.features.map((feature, index) => (
-                      <div 
+                      <div
                         key={index}
-                        className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/20"
+                        className={cn(
+                          'flex items-center space-x-3 rounded-xl p-3 backdrop-blur-sm border',
+                          currentColors.glass
+                        )}
                       >
-                        <Check className="w-4 h-4 text-green-400" />
-                        <span className="text-white font-medium">{feature}</span>
+                        <CheckIcon className="w-5 h-5 text-green-400 flex-shrink-0" />
+                        <span className={cn('font-medium', currentColors.text)}>{feature}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
-
-              {/* Trust Indicators */}
-              <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 pt-4 animate-in slide-in-from-left duration-700 delay-1100">
-                <div className="flex items-center space-x-3">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <div className="text-white">
-                    <div className="font-bold">4.8/5</div>
-                    <div className="text-sm opacity-80">Customer Rating</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Truck className="h-6 w-6 text-green-400" />
-                  <div className="text-white">
-                    <div className="font-bold">Free Shipping</div>
-                    <div className="text-sm opacity-80">Orders KES 1,000+</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Shield className="h-6 w-6 text-blue-400" />
-                  <div className="text-white">
-                    <div className="font-bold">Secure Payment</div>
-                    <div className="text-sm opacity-80">SSL Protected</div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
-          {/* Feature Showcase */}
-          <div className="lg:col-span-5 hidden lg:block">
+          {/* Stats & Trust Section */}
+          <div className="lg:pl-8">
             <div className="animate-in slide-in-from-right duration-700 delay-500">
-              <div className="relative">
-                <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105">
-                  <div className="flex items-center space-x-3 mb-6">
-                    <div className="h-12 w-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
-                      <Award className="h-6 w-6 text-white" />
+              {/* Stats Card */}
+              <div className={cn(
+                'rounded-3xl p-8 backdrop-blur-xl border shadow-2xl mb-8',
+                currentColors.glass
+              )}>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center space-x-3">
+                    <div className={cn(
+                      'h-12 w-12 rounded-2xl flex items-center justify-center bg-gradient-to-br',
+                      currentColors.accent
+                    )}>
+                      <TrendingUp className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <h3 className={cn('text-2xl font-bold', currentSlideData.textColor)}>
-                        Why Choose ECommercy?
+                      <h3 className={cn('text-xl font-bold', currentColors.text)}>
+                        Market Leader
                       </h3>
-                      <p className="text-white/80">Premium shopping experience</p>
+                      <p className={cn('text-sm', currentColors.textSecondary)}>
+                        Trusted by professionals
+                      </p>
                     </div>
                   </div>
-                  
-                  <div className="space-y-6">
-                    {[
-                      { icon: '🚚', title: 'Fast & Free Delivery', desc: 'Same-day delivery in Nairobi' },
-                      { icon: '🔒', title: 'Secure Payment', desc: 'Bank-level security & encryption' },
-                      { icon: '💎', title: 'Premium Quality', desc: 'Handpicked products & brands' },
-                      { icon: '🎯', title: 'AI-Powered Recommendations', desc: 'Personalized just for you' },
-                    ].map((item, index) => (
-                      <div 
-                        key={index}
-                        className="group flex items-center space-x-4 p-3 rounded-xl hover:bg-white/10 transition-all duration-300"
-                        style={{ animationDelay: `${(index + 1) * 200}ms` }}
-                      >
-                        <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <span className="text-2xl">{item.icon}</span>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-3 gap-6 mb-8">
+                  <div className="text-center">
+                    <div className={cn('text-2xl font-bold', currentColors.text)}>
+                      {currentSlideData.stats?.customers}
+                    </div>
+                    <div className={cn('text-xs font-medium', currentColors.textSecondary)}>
+                      Active Customers
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className={cn('text-2xl font-bold', currentColors.text)}>
+                      {currentSlideData.stats?.products}
+                    </div>
+                    <div className={cn('text-xs font-medium', currentColors.textSecondary)}>
+                      Premium Products
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className={cn('text-2xl font-bold', currentColors.text)}>
+                      {currentSlideData.stats?.rating}
+                    </div>
+                    <div className={cn('text-xs font-medium', currentColors.textSecondary)}>
+                      Average Rating
+                    </div>
+                  </div>
+                </div>
+
+                {/* Trust Indicators */}
+                <div className="space-y-4">
+                  {[
+                    { icon: '🚚', title: 'Enterprise Delivery', desc: 'Priority logistics network' },
+                    { icon: '🔐', title: 'Security Certified', desc: 'SOC 2 Type II compliant' },
+                    { icon: '👥', title: 'Dedicated Support', desc: '24/7 professional assistance' },
+                    { icon: '🌍', title: 'Global Reach', desc: 'Worldwide shipping available' }
+                  ].map((item, index) => (
+                    <div
+                      key={index}
+                      className="group flex items-center space-x-4 p-3 rounded-xl hover:bg-white/5 transition-all duration-300"
+                    >
+                      <div className={cn(
+                        'w-10 h-10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br',
+                        currentColors.accent
+                      )}>
+                        <span className="text-lg">{item.icon}</span>
+                      </div>
+                      <div className="flex-1">
+                        <div className={cn('font-semibold text-sm', currentColors.text)}>
+                          {item.title}
                         </div>
-                        <div className="flex-1">
-                          <span className={cn('font-bold block', currentSlideData.textColor)}>
-                            {item.title}
-                          </span>
-                          <span className="text-white/70 text-sm">{item.desc}</span>
+                        <div className={cn('text-xs', currentColors.textSecondary)}>
+                          {item.desc}
                         </div>
                       </div>
-                    ))}
-                  </div>
-
-                  {/* Stats */}
-                  <div className="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/20">
-                    <div className="text-center">
-                      <div className="text-2xl font-black text-white">50K+</div>
-                      <div className="text-xs text-white/70">Happy Customers</div>
                     </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-black text-white">1M+</div>
-                      <div className="text-xs text-white/70">Products</div>
+                  ))}
+                </div>
+                </div>
+                {/* Rating Section */}
+                <div className={cn(
+                  'rounded-2xl p-6 backdrop-blur-xl border',
+                  currentColors.glass
+                )}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                        ))}
+                      </div>
+                      <div className={cn('font-bold text-lg', currentColors.text)}>
+                        {currentSlideData.stats?.rating}/5
+                      </div>
                     </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-black text-white">24/7</div>
-                      <div className="text-xs text-white/70">Support</div>
+                    <div className={cn('text-sm', currentColors.textSecondary)}>
+                      Based on 12,000+ reviews
                     </div>
                   </div>
                 </div>
@@ -343,26 +469,16 @@ export function HeroSection() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* CSS for custom animations */}
-      <style jsx>{`
-        @keyframes Check {
-          0% { transform: scale(0) rotate(45deg); }
-          50% { transform: scale(1.2) rotate(45deg); }
-          100% { transform: scale(1) rotate(45deg); }
-        }
-        
-        .animate-check {
-          animation: Check 0.5s ease-out forwards;
-        }
-      `}</style>
+        {/* Enhanced Navigation Controls */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        </div>
     </section>
   );
 }
 
-// Check component for features
-function Check({ className }: { className?: string }) {
+// Enhanced Check Icon Component
+function CheckIcon({ className }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -374,7 +490,7 @@ function Check({ className }: { className?: string }) {
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={2}
+        strokeWidth={2.5}
         d="M5 13l4 4L19 7"
       />
     </svg>
